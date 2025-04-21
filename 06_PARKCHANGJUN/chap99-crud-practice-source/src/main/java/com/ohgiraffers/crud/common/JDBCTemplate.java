@@ -1,4 +1,4 @@
-package com.ohgiraffers.common;
+package com.ohgiraffers.crud.common;
 
 import java.io.FileReader;
 import java.sql.*;
@@ -10,13 +10,17 @@ public class JDBCTemplate {
         Properties props = new Properties();
         Connection con = null;
         try {
-            props.load(new FileReader("src/main/java/com/ohgiraffers/config/connection-info.properties"));
+            props.load(new FileReader("src/main/java/com/ohgiraffers/crud/config/jdbc-info.properties"));
 
             String driver = props.getProperty("driver");
             String url = props.getProperty("url");
             Class.forName(driver);
 
             con = DriverManager.getConnection(url, props);
+            // 자동 커밋 설정을 수동 커밋 설정으로 변경하여 서비스계층에서 트랜잭션을 컨트롤할 수 있도록 함
+            con.setAutoCommit(false);
+
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -55,5 +59,23 @@ public class JDBCTemplate {
         }
     }
 
+    public static void commit(Connection con) {
+        try {
+            if (con != null && !con.isClosed()) {
+                con.commit();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public static void rollback(Connection con) {
+        try {
+            if (con != null && !con.isClosed()) {
+                con.rollback();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
