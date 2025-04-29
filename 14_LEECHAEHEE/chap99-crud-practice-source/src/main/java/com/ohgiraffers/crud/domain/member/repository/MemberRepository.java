@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 
 import static com.ohgiraffers.crud.common.JDBCTemplate.close;
 
@@ -22,7 +23,7 @@ public class MemberRepository {
     public MemberRepository() {
         prop = new Properties();
         try {
-            prop.loadFromXML(new FileInputStream("src/main/resources/mapper/MemberMapper.xml"));
+            prop.loadFromXML(new FileInputStream("src/main/java/com/ohgiraffers/crud/resources/mapper/MemberMapper.xml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -33,7 +34,6 @@ public class MemberRepository {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
         String sql = prop.getProperty("selectAllMembers");
-
         System.out.println("sql = " + sql);
 
         List<Member> members = null;
@@ -60,8 +60,15 @@ public class MemberRepository {
             close(pstmt);
             close(rset);
         }
-
         return members;
     }
+
+    public List<Member> selectOneMembers(Connection con) {
+        PreparedStatement pstmt = null;
+        String sql = prop.getProperty("selectOneMembers");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("회원번호를 입력하세요 : ");
+        String empId = sc.nextLine();
+        System.out.println();;
 
 }

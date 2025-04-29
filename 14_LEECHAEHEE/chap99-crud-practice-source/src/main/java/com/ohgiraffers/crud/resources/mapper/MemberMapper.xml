@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment/>
+    <entry key="selectAllMembers">
+        SELECT
+        a.emp_id
+        , a.emp_name
+        , a.emp_no
+        , b.dept_id
+        , b.dept_title
+        FROM
+        employee a
+        join department b
+        on b.DEPT_ID = a.DEPT_CODE
+    </entry>
+    <entry key="selectOneMembers">
+        SELECT
+        a.emp_id
+        , a.emp_name
+        , a.emp_no
+        , b.dept_id
+        , b.dept_title
+        FROM
+        employee a
+        join department b
+        on b.DEPT_ID = a.DEPT_CODE
+        WHERE
+        a.emp_id = ?
+    </entry>
+</properties>
