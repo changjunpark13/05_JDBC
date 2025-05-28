@@ -39,6 +39,8 @@ public class JDBCTemplate {
     }
 
     public static void close(Statement stmt) {
+        // PreparedStatement가 Statement의 자식 클래스(상속 구조)이기 때문에 다형성을 적용할 수 있다.
+        // 동적바인딩이 발생하여 PreparedStatement의 close()클래스를 따로 만들지 않아도 된다.
         try {
             if (stmt != null) {
                 stmt.close();
